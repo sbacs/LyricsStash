@@ -28,5 +28,5 @@ export interface Track{
 
 
 export interface CatalogProvider{
-    search: (query: string) => Promise<string[]>;
+    search: (query: string) => Promise<Track[]>;
 }

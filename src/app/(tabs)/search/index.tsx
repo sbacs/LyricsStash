@@ -2,52 +2,35 @@ import { Stack } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import { useStore } from '@/lib/useLibrary'
+import { Track } from '@/lib/types'
+import { Image } from 'expo-image'
+
 
 export default function SearchPage() {
-  const [query, setQuery] = useState('')
-  const [tracks, setTracks] = useState<string[]>([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
 
   const catalogProvider = useStore((state) => state.catalogProvider)
 
+  const [query, setQuery] = useState('')
+  const [tracksRes, setTracks] = useState<Track[]>([])
+
   useEffect(() => {
-    const trimmed = query.trim()
 
-    if (!trimmed) {
-      setTracks([])
-      setError(null)
-      setLoading(false)
-      return
-    }
 
-    let cancelled = false
-
-    const timeout = setTimeout(async () => {
+    const id = setTimeout(async () => {
       try {
-        setLoading(true)
-        setError(null)
-
-        const results = await catalogProvider.search(trimmed)
-        console.log('query:', trimmed, 'results:', results.length)
-
-        if (!cancelled) setTracks(results)
-      } catch (e: any) {
+        const tracks = await catalogProvider.search(query)
+        setTracks(tracks)
+      } catch (e) {
         console.error('search failed', e)
-        if (!cancelled) {
-          setTracks([])
-          setError(e?.message ?? 'Search failed')
-        }
-      } finally {
-        if (!cancelled) setLoading(false)
       }
-    }, 300)
+    }, 300);
 
     return () => {
-      cancelled = true
-      clearTimeout(timeout)
+      clearTimeout(id)
     }
-  }, [query, catalogProvider])
+
+  }, [query])
+
 
   return (
     <>
@@ -59,39 +42,31 @@ export default function SearchPage() {
         onChangeText={(e) => setQuery(e.nativeEvent.text)}
       />
 
-      <ScrollView
-        className="flex-1 bg-white dark:bg-black"
-        contentInsetAdjustmentBehavior="automatic"
-      >
-        {loading && (
-          <View className="p-3">
-            <Text className="text-gray-500">Loading...</Text>
-          </View>
-        )}
-
-        {error && (
-          <View className="p-3">
-            <Text className="text-red-500">{error}</Text>
-          </View>
-        )}
-
-        {!loading && !error && query.trim() !== '' && tracks.length === 0 && (
-          <View className="p-3">
-            <Text className="text-gray-500">No results</Text>
-          </View>
-        )}
-
-        {tracks.map((track, index) => (
-          <View
-            key={`${track}-${index}`}
-            className="border-b border-gray-200 px-4 py-3 dark:border-gray-800"
-          >
-            <Text className="text-base text-black dark:text-white">
-              {track}
-            </Text>
+      <ScrollView contentContainerClassName="gap-3 p-4">
+        {tracksRes.map((t, i) => (
+          <View key={i} className="w-full flex-row items-center gap-x-2">
+            <Image
+              source={{ uri: t.release.photo_path }}
+              style={{ width: 50, height: 50, borderRadius: 4 }}
+              contentFit="cover"
+              transition={200}
+            />
+            <View className='flex flex-1 flex-col' >
+              <Text className="text-white font-sans text-lg w-full" numberOfLines={1} ellipsizeMode="tail">
+                {t.name}
+              </Text>
+              <View className="flex flex-row gap-x-1">
+                {
+                  t.artists.map((a, i) => {
+                    return <Text className='text-white/50 font-sans'>{a.name}{i < t.artists.length - 1 && ","}</Text>
+                  })
+                }
+              </View>
+            </View>
           </View>
         ))}
       </ScrollView>
+
     </>
   )
 }
