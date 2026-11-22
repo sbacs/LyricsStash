@@ -54,3 +54,80 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+```
+LyricsStash
+├─ AGENTS.md
+├─ app.json
+├─ assets
+│  ├─ expo.icon
+│  │  ├─ Assets
+│  │  │  ├─ expo-symbol 2.svg
+│  │  │  └─ grid.png
+│  │  └─ icon.json
+│  └─ images
+│     ├─ expo-badge-white.png
+│     ├─ expo-badge.png
+│     ├─ expo-logo.png
+│     ├─ favicon.png
+│     ├─ icon.png
+│     ├─ logo-glow.png
+│     ├─ react-logo.png
+│     ├─ react-logo@2x.png
+│     ├─ react-logo@3x.png
+│     ├─ splash-icon.png
+│     ├─ tabIcons
+│     │  ├─ explore.png
+│     │  ├─ explore@2x.png
+│     │  ├─ explore@3x.png
+│     │  ├─ home.png
+│     │  ├─ home@2x.png
+│     │  └─ home@3x.png
+│     └─ tutorial-web.png
+├─ babel.config.js
+├─ LICENSE
+├─ metro.config.js
+├─ nativewind-env.d.ts
+├─ package-lock.json
+├─ package.json
+├─ README.md
+├─ scripts
+│  └─ reset-project.js
+├─ src
+│  ├─ app
+│  │  ├─ (tabs)
+│  │  │  ├─ explore.tsx
+│  │  │  ├─ profile.tsx
+│  │  │  ├─ search
+│  │  │  │  ├─ index.tsx
+│  │  │  │  └─ _layout.tsx
+│  │  │  └─ _layout.tsx
+│  │  ├─ lyrics
+│  │  │  ├─ add
+│  │  │  │  └─ index.tsx
+│  │  │  └─ [name].tsx
+│  │  └─ _layout.tsx
+│  ├─ components
+│  │  ├─ app-tabs.tsx
+│  │  ├─ external-link.tsx
+│  │  └─ trackView.tsx
+│  ├─ constants
+│  │  └─ theme.ts
+│  ├─ global.css
+│  ├─ hooks
+│  │  ├─ use-color-scheme.ts
+│  │  ├─ use-color-scheme.web.ts
+│  │  └─ use-theme.ts
+│  └─ lib
+│     ├─ catalogProviders
+│     │  └─ YoutTubeMusic.ts
+│     ├─ colorPicker.ts
+│     ├─ lyricsProviders
+│     │  └─ lcrlib.ts
+│     ├─ providers.ts
+│     ├─ types.ts
+│     └─ useLibrary.ts
+├─ tailwind.config.js
+└─ tsconfig.json
+
+```

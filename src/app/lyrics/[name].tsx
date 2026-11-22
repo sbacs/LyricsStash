@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useStore } from '@/lib/useLibrary';
 import { pastelFromCover } from '@/lib/colorPicker';
 import { Lyrics } from '@/lib/types';
+import { Link } from 'expo-router';
 
 export default function LyricsPage() {
 
@@ -67,9 +68,9 @@ export default function LyricsPage() {
   )
 
   return (
-    <View className="w-full h-full py-10 px-5 gap-y-10 flex flex-col justify-center items-center" style={{ backgroundColor: bg }}>
+    <View className="flex-1 py-10 px-5 flex flex-col justify-center items-center" style={{ backgroundColor: bg }}>
 
-      <View className='flex flex-col h-[80%] w-full items-center gap-y-5 '>
+      <View className='flex flex-col h-[90%] w-full items-center gap-y-5  '>
         <Text className='text-white font-bold '>{lastSelectedTrack?.name}</Text>
 
         <View className="flex-1 flex items-center">
@@ -99,10 +100,14 @@ export default function LyricsPage() {
           />
 
         </View>
+
+
+        <Link href="/lyrics/add" asChild>
+          <Pressable className="bg-white h-14 w-40 rounded-full items-center justify-center">
+            <Text className="text-black font-bold">Continua</Text>
+          </Pressable>
+        </Link>
       </View>
-
-
-      <Pressable className='bg-white h-14 w-40 rounded-full flex items-center justify-center ' ><Text className='text-black font-bold text-xl'>Continua</Text></Pressable>
 
     </View>
   );
