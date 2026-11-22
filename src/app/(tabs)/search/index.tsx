@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { ScrollView, Text, View, Pressable } from 'react-native'
+import { ScrollView, Text, View, Pressable, FlatList } from 'react-native'
 import { useStore } from '@/lib/useLibrary'
 import { Track } from '@/lib/types'
 import { Image } from 'expo-image'
@@ -44,9 +44,9 @@ export default function SearchPage() {
         onChangeText={(e) => setQuery(e.nativeEvent.text)}
       />
 
-      <ScrollView contentContainerClassName="gap-3 p-4 pt-24">
-        {tracksRes.map((t, i) => (
-          <View key={i} className="w-full flex-row items-center gap-x-2">
+      <FlatList data={tracksRes} numColumns={1} contentContainerClassName='gap-y-2 p-4' keyExtractor={(t) => String(t.id)}
+        renderItem={({item: t}) => (
+          <View key={t.id} className="flex-1 flex flex-row gap-x-2 bg-red-500" >
             <Image
               source={{ uri: t.release.photo_path }}
               style={{ width: 50, height: 50, borderRadius: 4 }}
@@ -54,7 +54,7 @@ export default function SearchPage() {
               transition={200}
             />
             <Link href={{ pathname: '/lyrics/[name]', params: { name: t.name } }} asChild>
-              <Pressable onPress={() => setLastSelectedTrack(t)} className="flex-1">
+              <Pressable onPress={() => setLastSelectedTrack(t)} className="">
                 <Text
                   className="text-white font-sans text-lg w-full"
                   numberOfLines={1}
@@ -73,8 +73,7 @@ export default function SearchPage() {
               </Pressable>
             </Link>
           </View>
-        ))}
-      </ScrollView>
+        )} />
 
     </>
   )
